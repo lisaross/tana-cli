@@ -95,6 +95,7 @@ public
 
 # macOS
 .DS_Store
+**/.DS_Store
 
 # Windows
 Thumbs.db

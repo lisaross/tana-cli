@@ -259,6 +259,24 @@ tana add --file large-import.txt --api
 - Node.js 16 or higher
 - Tana account (for API mode)
 
+## Publishing to GitHub/npm
+
+### GitHub Setup
+1. Create a new repository named `tana-cli` on GitHub
+2. Update `YOUR_USERNAME` in `package.json` with your GitHub username
+3. Push to GitHub:
+   ```bash
+   git remote add origin https://github.com/YOUR_USERNAME/tana-cli.git
+   git branch -M main
+   git push -u origin main
+   ```
+
+### npm Publishing (Optional)
+```bash
+npm login
+npm publish
+```
+
 ## License
 
 MIT
