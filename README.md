@@ -28,7 +28,7 @@ npm install -g tana-cli
 ### Local Development
 
 ```bash
-git clone <repository>
+git clone https://github.com/YOUR_USERNAME/tana-cli.git
 cd tana-cli
 npm install
 npm link  # Makes 'tana' command available globally
