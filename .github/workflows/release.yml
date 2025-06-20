@@ -1,0 +1,60 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Use Node.js 20
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20
+        cache: 'npm'
+        registry-url: 'https://registry.npmjs.org'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Test before release
+      run: |
+        node bin/tana --help
+        node bin/tana "Release test" --dry-run
+    
+    - name: Create GitHub Release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        body: |
+          ## Changes
+          
+          See the [CHANGELOG](https://github.com/lisaross/tana-cli/commits/${{ github.ref }}) for details.
+          
+          ## Installation
+          
+          ```bash
+          npm install -g tana-cli
+          ```
+          
+          ## Quick Start
+          
+          ```bash
+          tana "My first note"
+          ```
+        draft: false
+        prerelease: false
+    
+    - name: Publish to npm
+      run: npm publish
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      if: "!contains(github.ref, 'beta') && !contains(github.ref, 'alpha')"

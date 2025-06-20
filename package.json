@@ -8,16 +8,17 @@
   },
   "scripts": {
     "start": "node bin/tana",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node bin/tana --help && node bin/tana 'test' --dry-run",
+    "prepublishOnly": "npm test"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/YOUR_USERNAME/tana-cli.git"
+    "url": "https://github.com/lisaross/tana-cli.git"
   },
   "bugs": {
-    "url": "https://github.com/YOUR_USERNAME/tana-cli/issues"
+    "url": "https://github.com/lisaross/tana-cli/issues"
   },
-  "homepage": "https://github.com/YOUR_USERNAME/tana-cli#readme",
+  "homepage": "https://github.com/lisaross/tana-cli#readme",
   "keywords": [
     "tana",
     "cli",
@@ -29,7 +30,7 @@
     "clipboard",
     "markdown"
   ],
-  "author": "Your Name <your.email@example.com>",
+  "author": "Lisa Ross <lisa@avenuego.com>",
   "license": "MIT",
   "dependencies": {
     "commander": "^11.1.0",
