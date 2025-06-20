@@ -8,8 +8,7 @@
   },
   "scripts": {
     "start": "node bin/tana",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "demo": "./demo.sh"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -53,4 +52,3 @@
     "CLAUDE.md"
   ]
 }
-EOF < /dev/null
