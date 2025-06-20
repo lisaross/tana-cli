@@ -4,7 +4,7 @@
   "description": "Command-line interface for Tana note-taking app with quick capture and advanced features",
   "main": "bin/tana",
   "bin": {
-    "tana": "./bin/tana"
+    "tana-cli": "./bin/tana"
   },
   "scripts": {
     "start": "node bin/tana",
