@@ -1,0 +1,56 @@
+{
+  "name": "tana-cli",
+  "version": "0.1.0",
+  "description": "Command-line interface for Tana note-taking app with quick capture and advanced features",
+  "main": "bin/tana",
+  "bin": {
+    "tana": "./bin/tana"
+  },
+  "scripts": {
+    "start": "node bin/tana",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "demo": "./demo.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/YOUR_USERNAME/tana-cli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/YOUR_USERNAME/tana-cli/issues"
+  },
+  "homepage": "https://github.com/YOUR_USERNAME/tana-cli#readme",
+  "keywords": [
+    "tana",
+    "cli",
+    "notes",
+    "productivity",
+    "knowledge-management",
+    "note-taking",
+    "quick-capture",
+    "clipboard",
+    "markdown"
+  ],
+  "author": "Your Name <your.email@example.com>",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^11.1.0",
+    "axios": "^1.6.0",
+    "clipboardy": "^3.0.0",
+    "chalk": "^4.1.2",
+    "ora": "^6.3.1",
+    "inquirer": "^9.2.0",
+    "js-yaml": "^4.1.0",
+    "fs-extra": "^11.2.0",
+    "uuid": "^9.0.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "files": [
+    "bin/",
+    "lib/",
+    "README.md",
+    "CLAUDE.md"
+  ]
+}
+EOF < /dev/null

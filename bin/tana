@@ -1,0 +1,109 @@
+#!/usr/bin/env node
+
+const { Command } = require('commander');
+const chalk = require('chalk');
+const { version } = require('../package.json');
+
+// Import command handlers
+const addCommand = require('../lib/commands/add');
+const configCommand = require('../lib/commands/config');
+const pasteCommand = require('../lib/commands/paste');
+const validateCommand = require('../lib/commands/validate');
+
+const program = new Command();
+
+program
+  .name('tana')
+  .description('Command-line interface for Tana note-taking app')
+  .version(version);
+
+// Global options
+program
+  .option('-v, --verbose', 'verbose output')
+  .option('-q, --quiet', 'suppress output')
+  .option('--dry-run', 'show what would be done without executing')
+  .option('-c, --config <path>', 'specify config file path');
+
+// Add command
+program
+  .command('add')
+  .description('Add content to Tana')
+  .argument('[content]', 'content to add')
+  .option('-t, --tag <tag>', 'add supertag (can be repeated)', (value, previous) => previous.concat([value]), [])
+  .option('-f, --field <field>', 'add field in format "name:value" (can be repeated)', (value, previous) => previous.concat([value]), [])
+  .option('--target <target>', 'target node (inbox, library, schema, or node ID)', 'inbox')
+  .option('--template <template>', 'use predefined template')
+  .option('--file <file>', 'read content from file')
+  .option('--api', 'use Input API mode')
+  .option('--paste', 'use Tana Paste mode (default)')
+  .option('--clipboard', 'copy to clipboard (default for paste mode)')
+  .option('--stdout', 'output to stdout instead of clipboard')
+  .action(addCommand);
+
+// Config command
+program
+  .command('config')
+  .description('Configuration management')
+  .argument('[action]', 'action to perform (init, set, get, show)')
+  .argument('[key]', 'configuration key')
+  .argument('[value]', 'configuration value')
+  .action(configCommand);
+
+// Paste command
+program
+  .command('paste')
+  .description('Generate Tana Paste format')
+  .argument('[content]', 'content to format')
+  .option('-t, --tag <tag>', 'add supertag (can be repeated)', (value, previous) => previous.concat([value]), [])
+  .option('-f, --field <field>', 'add field in format "name:value" (can be repeated)', (value, previous) => previous.concat([value]), [])
+  .option('--template <template>', 'use predefined template')
+  .option('--stdout', 'output to stdout instead of clipboard')
+  .action(pasteCommand);
+
+// Validate command
+program
+  .command('validate')
+  .description('Validate data and formats')
+  .option('--paste-file <file>', 'validate Tana Paste format file')
+  .option('--api-file <file>', 'validate JSON for API')
+  .option('--template <template>', 'validate template')
+  .action(validateCommand);
+
+
+// Quick capture - if first argument doesn't match a command, treat it as content
+program
+  .argument('[content]', 'content to add to Tana')
+  .action((content, options) => {
+    // This is the default action when no specific command is matched
+    if (content) {
+      console.log(chalk.blue('Quick capture mode'));
+      const addCommand = require('../lib/commands/add');
+      // Create a mock command object for compatibility
+      const mockCommand = {
+        parent: {
+          opts: () => ({ verbose: options.verbose, quiet: options.quiet, dryRun: options.dryRun })
+        }
+      };
+      addCommand(content, { paste: true }, mockCommand);
+    } else {
+      program.help();
+    }
+  });
+
+// Error handling
+program.exitOverride();
+
+try {
+  program.parse();
+} catch (err) {
+  if (err.code === 'commander.unknownCommand') {
+    console.error(chalk.red(`Unknown command: ${err.message}`));
+    console.log(chalk.yellow('Run "tana --help" for available commands.'));
+  } else if (err.code === 'commander.missingArgument') {
+    console.error(chalk.red(`Missing argument: ${err.message}`));
+  } else {
+    console.error(chalk.red(`Error: ${err.message}`));
+  }
+  process.exit(1);
+}
+
