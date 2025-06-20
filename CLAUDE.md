@@ -6,9 +6,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 The tana-cli is now a working, installable CLI tool with proper structure and quick capture functionality.
 
+## Development Workflow
+
+- Always create a branch for new work and use PRs to manage merges into main
+
 ## Common Development Commands
 
 ### Running the CLI
+
 ```bash
 # Quick capture (most common use case)
 node bin/tana "Quick note"
@@ -26,6 +31,7 @@ tana "Quick note"  # Now works globally
 ```
 
 ### Testing Commands
+
 ```bash
 # Test quick capture
 node bin/tana "Test note" --dry-run
@@ -41,6 +47,7 @@ node bin/tana config show
 ## Code Architecture (FIXED ✅)
 
 ### Directory Structure (CORRECTED)
+
 ```
 bin/tana                    # Main CLI entry point (executable)
 lib/
@@ -58,6 +65,7 @@ README.md                  # Comprehensive documentation
 ```
 
 ### Quick Capture Feature ✅
+
 - Default command: `tana "content"` copies to clipboard
 - Most common use case made simplest
 - Supports all global flags (--dry-run, --verbose, etc.)
@@ -82,7 +90,7 @@ README.md                  # Comprehensive documentation
 
 ### Command Architecture
 
-1. **Default/Quick Capture**: `tana "content"` 
+1. **Default/Quick Capture**: `tana "content"`
    - Most common use case
    - Automatically uses paste mode
    - Copies to clipboard by default
@@ -106,15 +114,18 @@ README.md                  # Comprehensive documentation
    - Template validation
 
 ### Removed Features
+
 - **context command**: Removed (overly complex for basic CLI)
 - Focus on core note-taking functionality
 
 ### Installation & Distribution
+
 - Proper package.json with correct bin path
 - Global installation via npm link works
 - All dependencies properly installed
 
 ### Usage Patterns
+
 ```bash
 # Quick daily usage
 tana "Quick thought"
